@@ -1,0 +1,12 @@
+{
+  "name": "create-route53-record",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.362.0",
+    "colors": "^1.3.2",
+    "commander": "^2.19.0",
+    "kubernetes-client": "^6.4.0"
+  }
+}
