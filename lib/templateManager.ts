@@ -5,7 +5,8 @@ import { promisify } from "util";
 
 const readFile = promisify(fs.readFile);
 
-export const parseTemplate = async (name, params) => {
+export const parseTemplate = async (name: string, params: any) => {
+  if (!require.main) throw new Error("require.main undefined");
   var appDir = path.dirname(require.main.filename);
 
   const filename = path.join(appDir, "templates", name + ".json");

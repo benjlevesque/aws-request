@@ -17,4 +17,4 @@
 
 _XXX.cloudfront.net from step 2_
 
-`route53 add --url accounts --target XXX.cloudfront.net --domain request.network --region "eu-west-1"`
+`route53 add --url accounts --target XXX.cloudfront.net --domainName request.network --region "eu-west-1"`
