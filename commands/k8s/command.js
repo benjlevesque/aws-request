@@ -1,13 +1,14 @@
 import add from ".";
-import { getNamespaces, getServices } from "./lib/k8sutils";
-export const command = "add";
-export const describe = "adds a route";
+// import { getNamespaces, getServices } from "./lib/k8utils";
+export const command = "k8s";
+export const describe = "adds a route to a k8s service";
 
 export function builder(yargs) {
   yargs.options({
-    url: { describe: "Url to create" },
-    target: { describe: "Target" },
-    region: { describe: "AWS Region", default: "eu-west-1" },
+    url: {
+      describe: "URL to create (for {xxx}.example.com, you can enter {xxx})"
+    },
+    region: { describe: "AWS Region" },
     domain: { describe: "Domain" },
     comment: { describe: "Comment", alias: "c" },
     "kube-namespace": { describe: "Kubernetes Namespace", type: "string" },

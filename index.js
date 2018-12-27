@@ -17,11 +17,11 @@ function main(argv) {
   const cli = yargs(argv)
     .usage("Usage: $0 <command> [options]")
     .demandCommand(1, "")
-    .getCompletion(["--kube-namespace"], completions => {
-      console.log(completions);
-    });
-  //.recommendCommands()
-  //.completion();
+    // .getCompletion(["--kube-namespace"], completions => {
+    //   console.log(completions);
+    // });
+    //.recommendCommands()
+    .completion();
 
   loadCommands(cli).parse(argv);
 }
