@@ -1,6 +1,7 @@
 import { createCloudfrontDistribution } from "../../lib/aws/cloudfront";
 import { createBucket } from "../../lib/aws/s3";
 import { createDnsRecord } from "../../lib/aws/route53";
+import sleep from "../../lib/sleep";
 
 interface ISpaCommandParameters {
   subdomain: string;
@@ -35,7 +36,7 @@ export default async ({
   const s3 = await createBucket({ url, region });
 
   setStatus(`Bucket created: ${s3.Location}`);
-
+  await sleep(1000);
   setStatus("Creating Cloudfront distribution...");
   const cloudfront = await createCloudfrontDistribution({
     url,
@@ -46,6 +47,7 @@ export default async ({
     throw new Error("Cloudfront distribution undefined");
   const target = cloudfront.Distribution.DomainName;
   setStatus(`Cloudfront distribution created: ${target}`);
+  await sleep(1000);
 
   setStatus("Creating route...");
   const record = await createDnsRecord({

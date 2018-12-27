@@ -1,11 +1,11 @@
 import { getServiceHostname } from "../../lib/k8s/utils";
 import { createDnsRecord } from "../../lib/aws/route53";
-import sleep from "../../dist/lib/sleep";
+import sleep from "../../lib/sleep";
 
 export interface IK8sCommandParams {
   subdomain: string;
   region: string;
-  comment: string;
+  comment?: string;
   domainName: string;
   service: string;
   namespace: string;

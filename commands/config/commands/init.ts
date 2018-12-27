@@ -1,7 +1,8 @@
-import inquirer = require("inquirer");
+import AWS from "aws-sdk";
+import inquirer from "inquirer";
 import { getRegions } from "../../../lib/aws/acm";
-import configFile from "config-file";
 import * as config from "../../../lib/config";
+const homedir = require("os").homedir();
 
 interface IOptions {
   domainName: string;
@@ -10,8 +11,7 @@ interface IOptions {
 export const command = "init";
 export const describe = "Initialze";
 export const handler = async () => {
-  // todo read aws config
-  const defaultRegion = configFile.home();
+  const defaultRegion = "eu-west-1";
   const loadRegions = async () => {
     const regions = await getRegions(defaultRegion);
     return regions.map(x => x.RegionName) as ReadonlyArray<string>;

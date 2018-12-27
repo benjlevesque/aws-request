@@ -3,19 +3,24 @@ import configFile from "config-file";
 import path from "path";
 const homedir = require("os").homedir();
 
-const getConfigPath = () => path.resolve(homedir, ".route53");
+const fileName = ".request/aws";
+
+const getConfigPath = () => path.resolve(homedir, fileName);
 const load = () => {
-  var opts = configFile.home(".route53");
-  if (opts == null) {
-    console.log("config not found... creating default.");
-    fs.appendFileSync(getConfigPath(), "{}");
-    opts = configFile.home(".route53");
-  }
-  return opts;
+  var opts = configFile.home(fileName);
+  return opts || {};
 };
+
 const saveConfig = (conf: any) => {
-  fs.writeFileSync(getConfigPath(), JSON.stringify(conf));
+  const configPath = getConfigPath();
+  const configDir = path.dirname(configPath);
+  if (!fs.existsSync(configDir)) {
+    fs.mkdirSync(configDir, { recursive: true });
+  }
+  fs.writeFileSync(configPath, JSON.stringify(conf));
 };
+
+export const exists = () => fs.existsSync(getConfigPath());
 
 export const list = () => load();
 

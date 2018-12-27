@@ -18,14 +18,16 @@ export const createCloudfrontDistribution = async ({
 
   const certificate_arn = await getCertificateArn(domainName, region);
 
-  const config = await parseTemplate("S3-cloudfront-distribution", {
-    url,
-    s3_id,
-    s3_url,
-    cloudFront_reference,
-    certificate_arn
-  });
-
+  const config = await parseTemplate<CloudFront.CreateDistributionRequest>(
+    "S3-cloudfront-distribution",
+    {
+      url,
+      s3_id,
+      s3_url,
+      cloudFront_reference,
+      certificate_arn
+    }
+  );
   const cloudfront = new CloudFront();
   const promiseResult = await cloudfront.createDistribution(config).promise();
   const response = promiseResult.$response;
