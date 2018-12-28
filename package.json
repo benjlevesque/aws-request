@@ -6,8 +6,8 @@
     "aws-request": "dist/cli.js"
   },
   "scripts": {
-    "start": "NODE_ENV=development ts-node ./cli.ts",
-    "build": "tsc && chmod +x ./dist/cli.js && cp -r ./templates ./dist"
+    "start": "NODE_ENV=development ts-node ./src/cli.ts",
+    "build": "tsc && chmod +x ./dist/cli.js"
   },
   "dependencies": {
     "aws-sdk": "^2.382.0",
