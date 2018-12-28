@@ -50,11 +50,13 @@ export interface IK8sOptions {
 export const k8sOptions = [
   {
     name: "namespace",
+    message: "In which namespace is your service located?",
     choices: getNamespaces,
     type: "list"
   },
   {
     name: "service",
+    message: "What is the name of your service?",
     choices: async (answers: IK8sOptions) => {
       return getServices(answers.namespace);
     },

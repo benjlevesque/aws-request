@@ -1,40 +1,54 @@
 import util from "util";
 import child_process from "child_process";
-const exec = async (program: string) => {
+
+const exec = async <T>(program: string) => {
   const { stdout, stderr } = await util.promisify(child_process.exec)(program);
   if (stderr) {
     throw new Error(stderr);
   }
-  return stdout;
+  const data: T = JSON.parse(stdout);
+  return data;
 };
 
+interface IListResult<T> {
+  items: T[];
+}
 interface IGenericResult {
-  items: {
-    metadata: {
-      name: string;
+  metadata: {
+    name: string;
+  };
+}
+interface IServiceResult extends IGenericResult {
+  status: {
+    loadBalancer: {
+      ingress: {
+        hostname: string;
+      }[];
     };
-  }[];
+  };
 }
 
 export const getNamespaces = async () => {
-  const stdout = await exec(`kubectl get namespaces -o json`);
-  const data: IGenericResult = JSON.parse(stdout);
-  return data.items.map(n => n.metadata.name);
-};
-export const getServices = async (namespace: string) => {
-  const stdout = await exec(
-    `kubectl get services --namespace=${namespace} -o json`
+  const data = await exec<IListResult<IGenericResult>>(
+    `kubectl get namespaces -o json`
   );
-  const data: IGenericResult = JSON.parse(stdout);
 
   return data.items.map(n => n.metadata.name);
 };
+export const getServices = async (namespace: string) => {
+  const data = await exec<IListResult<IServiceResult>>(
+    `kubectl get services --namespace=${namespace} -o json`
+  );
+  return data.items
+    .filter(n => n.status.loadBalancer.ingress != null)
+    .map(n => n.metadata.name);
+};
 export const getServiceHostname = async (name: string, namespace: string) => {
-  const stdout = await exec(
+  const data = await exec<IServiceResult>(
     `kubectl get service "${name}" --namespace=${namespace} -o json`
   );
   try {
-    return JSON.parse(stdout).status.loadBalancer.ingress[0].hostname as string;
+    return data.status.loadBalancer.ingress[0].hostname as string;
   } catch (e) {
     console.log({
       name,
