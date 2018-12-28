@@ -33,7 +33,6 @@
     "typescript": "^3.2.2"
   },
   "files": [
-    "dist/",
-    "package.json"
+    "dist/"
   ]
 }
