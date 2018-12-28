@@ -1,13 +1,13 @@
 {
-  "name": "create-route53-record",
-  "version": "1.0.0",
+  "name": "aws-request",
+  "version": "0.1.0",
   "license": "MIT",
   "bin": {
     "aws-request": "dist/cli.js"
   },
   "scripts": {
     "start": "NODE_ENV=development ts-node ./cli.ts",
-    "build": "tsc && chmod +x ./dist/cli.js"
+    "build": "tsc && chmod +x ./dist/cli.js && cp -r ./templates ./dist"
   },
   "dependencies": {
     "aws-sdk": "^2.382.0",
@@ -31,5 +31,9 @@
     "@types/yargs": "^12.0.4",
     "ts-node": "^7.0.1",
     "typescript": "^3.2.2"
-  }
+  },
+  "files": [
+    "dist/",
+    "package.json"
+  ]
 }
