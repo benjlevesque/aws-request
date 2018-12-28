@@ -1,20 +1,49 @@
-## S3 Example
+# AWS-Request
 
-1. make S3 bucket
+## Installation
 
-`aws s3 mb s3://accounts.request.network`
+Not available yet!
 
-2. Create CloudFront distribution
-   _first modify your parameters!_
+### Bash completion
 
-`aws cloudfront create-distribution --distribution-config file://distribution.json`
+Generate bash completion script with
 
-3. Sync to S3 bucket
+`aws-request bash-completion`
 
-`aws s3 sync ./public s3://accounts.request.network --acl public-read --delete`
+## Configuration
 
-4. Configure Route53
+Setup your defaults using:
 
-_XXX.cloudfront.net from step 2_
+`aws-request config init`
 
-`route53 add --url accounts --target XXX.cloudfront.net --domainName request.network --region "eu-west-1"`
+## Commands
+
+1. Interactive
+   Will guide you through choices
+
+`aws-request prompt`
+
+2. Command Line
+
+- SPA on S3
+
+`aws-request spa [subdomain]`
+
+For example, if your default domain is 'example.org':
+
+`aws-request spa dashboard`
+
+will create `dashboard.example.org`
+
+Type `aws-request spa help` for details on available options.
+
+- Backend on Kubernetes
+  `aws-request spa [subdomain] --namespace [namespace] --service [service]`
+
+NB: CLI autocomplete is currently broken for kubernetes, but you can have a smooth experience using `aws-request prompt`
+
+Example:
+
+`aws-request k8s dashboard --namespace default --service dashboard-service`
+
+Use `aws-request k8s help` for more details on available options.
