@@ -2,7 +2,7 @@
 
 ## Installation
 
-Not available yet!
+`yarn global add aws-request`
 
 ### Bash completion
 
