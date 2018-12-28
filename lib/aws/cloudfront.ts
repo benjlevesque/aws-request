@@ -1,6 +1,7 @@
 import { CloudFront } from "aws-sdk";
 import { parseTemplate } from "../templateManager";
 import { getCertificateArn } from "./acm";
+import cloudFrontTemplate from "../../templates/S3-cloudfront-distribution.json";
 
 interface IParams {
   url: string;
@@ -19,7 +20,7 @@ export const createCloudfrontDistribution = async ({
   const certificate_arn = await getCertificateArn(domainName, region);
 
   const config = await parseTemplate<CloudFront.CreateDistributionRequest>(
-    "S3-cloudfront-distribution",
+    cloudFrontTemplate,
     {
       url,
       s3_id,

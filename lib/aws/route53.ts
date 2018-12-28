@@ -1,5 +1,6 @@
 import { Route53 } from "aws-sdk";
 import { parseTemplate } from "../templateManager";
+import route53Template from "../../templates/route53-create-record.json";
 
 const route53 = new Route53();
 const getZones = async (params: Route53.ListHostedZonesRequest) => {
@@ -44,7 +45,7 @@ const getTargetZone = (target: string, region: string) => {
 
 const changeResourceRecordSets = async (params: any) => {
   const options = await parseTemplate<Route53.ChangeResourceRecordSetsRequest>(
-    "route53-create-record",
+    route53Template,
     params
   );
   const promiseResult = await route53
