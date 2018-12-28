@@ -1,0 +1,20 @@
+{
+  "ChangeBatch": {
+    "Changes": [
+      {
+        "Action": "CREATE",
+        "ResourceRecordSet": {
+          "Name": "{{url}}",
+          "Type": "A",
+          "AliasTarget": {
+            "HostedZoneId": "{{targetZoneId}}",
+            "DNSName": "{{targetUrl}}",
+            "EvaluateTargetHealth": false
+          }
+        }
+      }
+    ],
+    "Comment": "[auto] {{comment}}"
+  },
+  "HostedZoneId": "{{zoneId}}"
+}
