@@ -1,6 +1,7 @@
 import add from ".";
 import { Argv } from "yargs";
 import { getNamespaces, getServices } from "../../lib/k8s/utils";
+import * as config from "../../lib/config";
 
 export const command = "k8s <subdomain>";
 export const describe = "adds a route to a k8s service";
@@ -18,9 +19,17 @@ export function builder(yargs: Argv) {
         type: "string",
         demandOption: true
       },
-      region: { describe: "AWS Region" },
-      domainName: { describe: "Domain Name" },
-      comment: { describe: "Comment", alias: "c" }
+      region: {
+        describe: "AWS Region",
+        type: "string",
+        default: config.get("region")
+      },
+      domainName: {
+        describe: "Domain Name",
+        type: "string",
+        default: config.get("domainName")
+      },
+      comment: { describe: "Comment", type: "string", alias: "c" }
     })
     .positional("subdomain", {
       description: "Subdomain to create (`xxx` for {xxx}.example.com)"

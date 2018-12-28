@@ -8,12 +8,17 @@ export const describe =
 export function builder(yargs: Argv) {
   yargs
     .options({
-      region: { describe: "AWS Region", default: config.get("region") },
+      region: {
+        describe: "AWS Region",
+        type: "string",
+        default: config.get("region")
+      },
       domainName: {
         describe: "Domain Name",
+        type: "string",
         default: config.get("domainName")
       },
-      comment: { describe: "Comment", alias: "c" }
+      comment: { describe: "Comment", type: "string", alias: "c" }
     })
     .positional("subdomain", {
       description: "Subdomain to create (`xxx` for {xxx}.example.com)"
