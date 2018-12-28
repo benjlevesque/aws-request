@@ -57,7 +57,7 @@ Use `aws-request k8s help` for more details on available options.
 - create a Cloudfront distribution mapping to the created bucket with :
    - HTTPS certificate 
    - HTTP to HTTPS redirection
-   - cache configuration (max 600ms on `index.html`, max 31536000ms on the other files) => <sup>[1](#myfootnote1)</sup>
+   - cache configuration (max 600ms on `index.html`, max 31536000ms on the other files) <sup>[1](#myfootnote1)</sup>
 - create a DNS A-record in Route53, alias to the generated Cloudfront distribution
 
 ### Kubernetes
