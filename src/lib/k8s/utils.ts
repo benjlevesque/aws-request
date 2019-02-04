@@ -108,14 +108,16 @@ export const getDeploymentImage = async (
 export async function getCurrentImageTag({
   region,
   deploymentName,
-  namespace
+  namespace,
+  containerName
 }: {
   region: string;
   deploymentName: string;
   namespace: string;
+  containerName: string;
 }): Promise<ImageTag> {
   const { stdout } = await execRaw(
-    `kubectl get -o=jsonpath='{$.spec.template.spec.containers[:1].image}' --namespace ${namespace} deployment ${deploymentName}`
+    `kubectl get -o=jsonpath='{$.spec.template.spec.containers[?(@.name == "${containerName}")].image}' --namespace ${namespace} deployment ${deploymentName}`
   );
   var myRegexp = /(?<image>.*):(?<tag>.*)/g;
   var match = myRegexp.exec(stdout);

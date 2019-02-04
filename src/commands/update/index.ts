@@ -26,7 +26,8 @@ export default async function process({
   const currentImage = await getCurrentImageTag({
     region,
     deploymentName,
-    namespace
+    namespace,
+    containerName
   });
 
   if (!currentImage) {
@@ -104,7 +105,10 @@ export async function prompt(parameters: IUpdateCommandParameters) {
       type: "list"
     }
   ]);
-  const containers = await getContainers(namespace, responses.deploymentName);
+  const containers = await getContainers(
+    responses.namespace,
+    responses.deploymentName
+  );
   let container = "";
   if (containers.length > 1) {
     const containerAnswer = await inquirer.prompt<{ containerName: string }>({
